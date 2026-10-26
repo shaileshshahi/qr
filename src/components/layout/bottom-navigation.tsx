@@ -25,7 +25,7 @@ export function BottomNavigation() {
       <div className="flex items-center justify-around h-16 px-4">
         {/* Scan */}
         <Link
-          href="/scan"
+          href="/"
           className={`flex flex-col items-center justify-center flex-1 py-1 transition-colors relative ${
             isScanActive
               ? "text-emerald-600 dark:text-emerald-400 font-semibold"

@@ -30,11 +30,11 @@ export default function ProvidersPage() {
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-zinc-50">
-            Step 4: Provider Selection
+          <h1 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Select Payment Method
           </h1>
-          <p className="text-xs text-slate-500 dark:text-zinc-400">
-            Choose wallet, QR network, or commercial bank
+          <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+            Choose wallet, QR network, or bank
           </p>
         </div>
       </div>

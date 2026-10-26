@@ -21,11 +21,11 @@ export default function HistoryPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-zinc-50">
-              Demo History
+            <h1 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+              Transaction History
             </h1>
-            <p className="text-xs text-slate-500 dark:text-zinc-400">
-              Locally persisted simulated transactions
+            <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+              All recorded demo payments
             </p>
           </div>
         </div>

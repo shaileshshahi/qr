@@ -9,18 +9,17 @@ import {
   Copy,
   Check,
   RotateCcw,
-  Home,
   Clock,
   Store,
   CreditCard,
   Tag,
   Calendar,
   MessageSquare,
-  ShieldAlert,
-  AlertTriangle,
+  ShieldCheck,
+  Share2,
+  CheckCircle,
 } from "lucide-react";
 import { SimulationTransaction } from "@/types/transaction";
-import { DemoBanner } from "../layout/demo-banner";
 
 interface SimulationResultViewProps {
   transaction: SimulationTransaction;
@@ -42,7 +41,7 @@ export function SimulationResultView({
     if (transaction.outcome === "success") {
       try {
         confetti({
-          particleCount: 50,
+          particleCount: 45,
           spread: 60,
           origin: { y: 0.6 },
           disableForReducedMotion: true,
@@ -54,18 +53,18 @@ export function SimulationResultView({
   }, [transaction.outcome]);
 
   const handleCopyReceipt = () => {
-    const text = `--- QR DEMO NEPAL (SIMULATION ONLY) ---
-Status: ${transaction.outcome.toUpperCase()} (DEMO)
-Simulation Ref: ${transaction.simulationRef}
+    const text = `--- QR DEMO NEPAL (SIMULATION) ---
+Status: ${transaction.outcome.toUpperCase()}
+Ref: ${transaction.simulationRef}
 Merchant: ${transaction.qrDetails.merchantName || "Unspecified"}
-Identifier: ${transaction.qrDetails.merchantIdentifier || "None"}
+ID: ${transaction.qrDetails.merchantIdentifier || "None"}
 Amount: NPR ${transaction.amount.toFixed(2)}
+Provider: ${transaction.providerName}
 Purpose: ${transaction.purposeLabel}
 Remarks: ${transaction.remarks || "None"}
-Provider: ${transaction.providerName}
 Date: ${new Date(transaction.createdAt).toLocaleString()}
 DISCLAIMER: SIMULATION ONLY. NO REAL MONEY WAS TRANSFERRED.
----------------------------------------`;
+-----------------------------------`;
 
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text);
@@ -80,85 +79,95 @@ DISCLAIMER: SIMULATION ONLY. NO REAL MONEY WAS TRANSFERRED.
 
   return (
     <div className="w-full space-y-4">
-      {/* Simulation Banner Notice */}
-      <DemoBanner variant="card" />
-
-      {/* Main Result Card */}
-      <div className="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden">
-        {/* Status Header */}
+      {/* Authentic Digital Receipt Ticket Card */}
+      <div className="rounded-3xl border border-slate-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xl shadow-slate-200/50 dark:shadow-none overflow-hidden relative">
+        {/* Top Status Accent Bar */}
         <div
-          className={`p-6 text-center border-b ${
+          className={`h-2.5 w-full ${
             isSuccess
-              ? "bg-gradient-to-b from-emerald-500/10 to-transparent border-emerald-100 dark:border-zinc-800"
+              ? "bg-emerald-500"
               : isFailed
-              ? "bg-gradient-to-b from-rose-500/10 to-transparent border-rose-100 dark:border-zinc-800"
-              : "bg-gradient-to-b from-slate-500/10 to-transparent border-slate-200 dark:border-zinc-800"
+              ? "bg-rose-500"
+              : "bg-slate-400"
           }`}
-        >
-          {/* Status Icon */}
-          <div className="flex justify-center mb-3">
+        />
+
+        {/* Hero Status Section */}
+        <div className="p-6 text-center space-y-3">
+          {/* Animated Status Icon */}
+          <div className="flex justify-center">
             {isSuccess && (
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-lg shadow-emerald-500/20 animate-in zoom-in-75 duration-300">
-                <CheckCircle2 className="w-10 h-10" />
+              <div className="w-16 h-16 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center ring-8 ring-emerald-500/10 shadow-lg shadow-emerald-500/20">
+                <CheckCircle2 className="w-9 h-9 stroke-[2.5]" />
               </div>
             )}
             {isFailed && (
-              <div className="w-16 h-16 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shadow-lg shadow-rose-500/20 animate-in zoom-in-75 duration-300">
-                <XCircle className="w-10 h-10" />
+              <div className="w-16 h-16 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center ring-8 ring-rose-500/10 shadow-lg shadow-rose-500/20">
+                <XCircle className="w-9 h-9 stroke-[2.5]" />
               </div>
             )}
             {isCancelled && (
-              <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 flex items-center justify-center shadow-md animate-in zoom-in-75 duration-300">
-                <Ban className="w-10 h-10" />
+              <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 flex items-center justify-center ring-8 ring-slate-500/10">
+                <Ban className="w-9 h-9 stroke-[2.5]" />
               </div>
             )}
           </div>
 
-          <h2
-            className={`text-xl sm:text-2xl font-black tracking-tight ${
-              isSuccess
-                ? "text-emerald-700 dark:text-emerald-400"
-                : isFailed
-                ? "text-rose-700 dark:text-rose-400"
-                : "text-slate-800 dark:text-zinc-200"
-            }`}
-          >
-            {isSuccess && "Demo Transaction Successful"}
-            {isFailed && "Demo Transaction Failed"}
-            {isCancelled && "Demo Transaction Cancelled"}
-          </h2>
-
-          <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-medium">
-            {isSuccess && "Simulation recorded in local demo history"}
-            {isFailed && (transaction.failureReason || "Simulation error in sandbox")}
-            {isCancelled && "Transaction was cancelled by user"}
-          </p>
-
-          {/* Amount Badge */}
-          <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-zinc-50 mt-3 tracking-tight">
-            NPR {transaction.amount.toFixed(2)}
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+              {isSuccess && "Payment Successful"}
+              {isFailed && "Payment Failed"}
+              {isCancelled && "Payment Cancelled"}
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+              {isSuccess && "Simulated payment processed in sandbox"}
+              {isFailed && (transaction.failureReason || "Transaction could not be completed")}
+              {isCancelled && "Transaction was cancelled by user"}
+            </p>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 text-xs font-bold uppercase tracking-wider border border-amber-500/20">
-            <AlertTriangle className="w-3.5 h-3.5" /> No Money Was Transferred
+          {/* Amount Display */}
+          <div className="py-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+              Amount Transferred
+            </span>
+            <div className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+              NPR {transaction.amount.toFixed(2)}
+            </div>
+          </div>
+
+          {/* Paid To Merchant Chip */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700 text-xs">
+            <Store className="w-3.5 h-3.5 text-slate-400" />
+            <span className="font-bold text-slate-800 dark:text-zinc-200">
+              {transaction.qrDetails.merchantName || "Merchant Name Unspecified"}
+            </span>
           </div>
         </div>
 
-        {/* Structured Transaction Summary */}
-        <div className="p-5 divide-y divide-slate-100 dark:divide-zinc-800 text-xs">
-          {/* Demo Ref ID */}
-          <div className="py-2.5 first:pt-0 flex justify-between items-center">
+        {/* Perforated Receipt Divider */}
+        <div className="relative flex items-center justify-between px-2">
+          <div className="w-4 h-8 rounded-r-full bg-slate-50 dark:bg-zinc-950 border-r border-t border-b border-slate-200/80 dark:border-zinc-800 -ml-2" />
+          <div className="flex-1 border-b-2 border-dashed border-slate-200 dark:border-zinc-800 mx-2" />
+          <div className="w-4 h-8 rounded-l-full bg-slate-50 dark:bg-zinc-950 border-l border-t border-b border-slate-200/80 dark:border-zinc-800 -mr-2" />
+        </div>
+
+        {/* Structured Receipt Details */}
+        <div className="p-6 space-y-3 text-xs">
+          {/* Reference ID with 1-tap copy */}
+          <div className="flex justify-between items-center py-1">
             <span className="text-slate-500 dark:text-zinc-400 font-medium">
-              Simulation Reference ID
+              Reference ID
             </span>
             <div className="flex items-center gap-1.5">
               <span className="font-mono font-bold text-slate-900 dark:text-zinc-100">
                 {transaction.simulationRef}
               </span>
               <button
+                type="button"
                 onClick={handleCopyReceipt}
-                className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-300"
-                title="Copy receipt"
+                className="p-1 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 transition"
+                title="Copy reference"
               >
                 {copied ? (
                   <Check className="w-3.5 h-3.5 text-emerald-500" />
@@ -169,40 +178,32 @@ DISCLAIMER: SIMULATION ONLY. NO REAL MONEY WAS TRANSFERRED.
             </div>
           </div>
 
-          {/* Merchant */}
-          <div className="py-2.5 flex justify-between items-center">
-            <span className="text-slate-500 dark:text-zinc-400 flex items-center gap-1.5">
-              <Store className="w-3.5 h-3.5 text-slate-400" /> Merchant
-            </span>
-            <span className="font-semibold text-slate-900 dark:text-zinc-100 text-right">
-              {transaction.qrDetails.merchantName || "Merchant Name Unspecified"}
-            </span>
-          </div>
-
-          {/* Account ID */}
-          <div className="py-2.5 flex justify-between items-center">
-            <span className="text-slate-500 dark:text-zinc-400 flex items-center gap-1.5">
-              <CreditCard className="w-3.5 h-3.5 text-slate-400" /> Identifier
-            </span>
-            <span className="font-mono text-slate-700 dark:text-zinc-300">
-              {transaction.qrDetails.merchantIdentifier || "None"}
-            </span>
-          </div>
-
-          {/* Provider */}
-          <div className="py-2.5 flex justify-between items-center">
+          {/* Paid Via Provider */}
+          <div className="flex justify-between items-center py-1">
             <span className="text-slate-500 dark:text-zinc-400 font-medium">
-              Simulated Provider
+              Payment Method
             </span>
-            <span className="font-semibold text-slate-900 dark:text-zinc-100">
+            <span className="font-bold text-slate-900 dark:text-zinc-100">
               {transaction.providerName}
             </span>
           </div>
 
+          {/* Merchant ID */}
+          {transaction.qrDetails.merchantIdentifier && (
+            <div className="flex justify-between items-center py-1">
+              <span className="text-slate-500 dark:text-zinc-400 font-medium">
+                Merchant PAN / ID
+              </span>
+              <span className="font-mono text-slate-700 dark:text-zinc-300">
+                {transaction.qrDetails.merchantIdentifier}
+              </span>
+            </div>
+          )}
+
           {/* Purpose */}
-          <div className="py-2.5 flex justify-between items-center">
-            <span className="text-slate-500 dark:text-zinc-400 flex items-center gap-1.5">
-              <Tag className="w-3.5 h-3.5 text-slate-400" /> Purpose
+          <div className="flex justify-between items-center py-1">
+            <span className="text-slate-500 dark:text-zinc-400 font-medium">
+              Purpose
             </span>
             <span className="font-semibold text-emerald-600 dark:text-emerald-400">
               {transaction.purposeLabel}
@@ -211,55 +212,81 @@ DISCLAIMER: SIMULATION ONLY. NO REAL MONEY WAS TRANSFERRED.
 
           {/* Remarks */}
           {transaction.remarks && (
-            <div className="py-2.5 flex justify-between items-center">
-              <span className="text-slate-500 dark:text-zinc-400 flex items-center gap-1.5">
-                <MessageSquare className="w-3.5 h-3.5 text-slate-400" /> Remarks
+            <div className="flex justify-between items-center py-1">
+              <span className="text-slate-500 dark:text-zinc-400 font-medium">
+                Remarks
               </span>
-              <span className="text-slate-800 dark:text-zinc-200 max-w-[200px] truncate text-right">
+              <span className="font-medium text-slate-800 dark:text-zinc-200 max-w-[200px] truncate text-right">
                 {transaction.remarks}
               </span>
             </div>
           )}
 
           {/* Date & Time */}
-          <div className="py-2.5 last:pb-0 flex justify-between items-center">
-            <span className="text-slate-500 dark:text-zinc-400 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-slate-400" /> Date & Time
+          <div className="flex justify-between items-center py-1">
+            <span className="text-slate-500 dark:text-zinc-400 font-medium">
+              Date &amp; Time
             </span>
-            <span className="text-slate-600 dark:text-zinc-400">
+            <span className="text-slate-600 dark:text-zinc-400 font-medium">
               {new Date(transaction.createdAt).toLocaleString("en-NP", {
                 dateStyle: "medium",
                 timeStyle: "short",
               })}
             </span>
           </div>
+
+          {/* Subtle Simulation Watermark Box */}
+          <div className="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800/80 text-center">
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+              <ShieldCheck className="w-3.5 h-3.5" /> Simulation Only • No Real Money Transferred
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="space-y-2 pt-2">
-        <div className="flex flex-col sm:flex-row gap-2.5">
-          {isFailed && onTryAgain && (
-            <button
-              onClick={onTryAgain}
-              className="flex-1 py-3 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
-            >
-              <RotateCcw className="w-4 h-4" /> Try Again
-            </button>
-          )}
-
+      <div className="space-y-2 pt-1">
+        {isFailed && onTryAgain && (
           <button
-            onClick={onNewScan}
-            className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm shadow-md shadow-emerald-600/20 transition inline-flex items-center justify-center gap-2"
+            type="button"
+            onClick={onTryAgain}
+            className="w-full py-3.5 px-4 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2 active:scale-[0.99]"
           >
-            <RotateCcw className="w-4 h-4" /> Scan Another QR
+            <RotateCcw className="w-4 h-4" /> Try Again
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={onNewScan}
+          className="w-full py-3.5 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm shadow-md shadow-emerald-600/25 transition inline-flex items-center justify-center gap-2 active:scale-[0.99]"
+        >
+          <RotateCcw className="w-4 h-4" /> Scan Another QR
+        </button>
+
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handleCopyReceipt}
+            className="flex-1 py-3 px-4 rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 font-bold text-xs hover:bg-slate-50 dark:hover:bg-zinc-800 transition inline-flex items-center justify-center gap-2 active:scale-[0.99]"
+          >
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-500" /> Copied Receipt
+              </>
+            ) : (
+              <>
+                <Share2 className="w-3.5 h-3.5" /> Share Receipt
+              </>
+            )}
           </button>
 
           <button
+            type="button"
             onClick={onViewHistory}
-            className="flex-1 py-3 px-4 rounded-xl border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 font-semibold text-sm hover:bg-slate-50 dark:hover:bg-zinc-800 transition inline-flex items-center justify-center gap-2"
+            className="flex-1 py-3 px-4 rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 font-bold text-xs hover:bg-slate-50 dark:hover:bg-zinc-800 transition inline-flex items-center justify-center gap-2 active:scale-[0.99]"
           >
-            <Clock className="w-4 h-4" /> View History
+            <Clock className="w-3.5 h-3.5" /> View History
           </button>
         </div>
       </div>

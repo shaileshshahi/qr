@@ -17,7 +17,6 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { SimulationTransaction } from "@/types/transaction";
-import { DemoBanner } from "../layout/demo-banner";
 
 interface TransactionDetailModalProps {
   transaction: SimulationTransaction | null;

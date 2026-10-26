@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Store, ArrowLeft, Layers, ShieldCheck } from "lucide-react";
+import { Store, Info, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { ScannedQrDetails } from "@/types/qr";
 
 interface MerchantSummaryProps {
@@ -15,14 +15,20 @@ export function MerchantSummary({
   onBackToQrDetails,
 }: MerchantSummaryProps) {
   return (
-    <div className="p-4 rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-between gap-3">
+    <div className="p-4 rounded-3xl border border-slate-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-between gap-3">
       <div className="flex items-center gap-3 min-w-0">
-        <div className="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20">
-          <Store className="w-5 h-5" />
+        <div className="relative shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-600/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-lg border border-emerald-500/20">
+            {qrDetails.merchantName ? qrDetails.merchantName.charAt(0).toUpperCase() : <Store className="w-5 h-5" />}
+          </div>
+          <div className="absolute -bottom-1 -right-1 w-4.5 h-4.5 rounded-full bg-emerald-600 text-white flex items-center justify-center">
+            <CheckCircle2 className="w-3 h-3 stroke-[3]" />
+          </div>
         </div>
+
         <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.2 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
               {qrDetails.paymentNetwork || "Merchant QR"}
             </span>
             {qrDetails.merchantCity && (
@@ -31,22 +37,24 @@ export function MerchantSummary({
               </span>
             )}
           </div>
-          <h3 className="font-bold text-sm text-slate-900 dark:text-zinc-100 truncate">
+          <h3 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-zinc-100 truncate mt-0.5">
             {qrDetails.merchantName || "Merchant Name Unspecified"}
           </h3>
           <p className="font-mono text-[11px] text-slate-500 dark:text-zinc-400 truncate">
-            ID: {qrDetails.merchantIdentifier || "Not specified in QR"}
+            PAN/ID: {qrDetails.merchantIdentifier || "None specified"}
           </p>
         </div>
       </div>
 
       {onBackToQrDetails && (
         <button
+          type="button"
           onClick={onBackToQrDetails}
-          className="shrink-0 text-xs text-emerald-600 dark:text-emerald-400 hover:underline font-medium inline-flex items-center gap-1 p-1.5"
+          className="shrink-0 text-[11px] text-slate-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 font-semibold inline-flex items-center gap-1 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800 transition"
+          title="View raw QR data"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Details</span>
+          <Info className="w-3.5 h-3.5" />
+          <span className="hidden xs:inline">QR Data</span>
         </button>
       )}
     </div>

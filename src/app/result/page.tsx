@@ -52,11 +52,11 @@ export default function ResultPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-zinc-50">
-              Simulation Outcome
+            <h1 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+              Payment Receipt
             </h1>
-            <p className="text-xs text-slate-500 dark:text-zinc-400">
-              Generated demo receipt &amp; sandbox record
+            <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+              Transaction confirmation
             </p>
           </div>
         </div>

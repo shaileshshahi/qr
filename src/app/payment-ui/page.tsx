@@ -39,17 +39,18 @@ export default function PaymentUiPage() {
       {/* Top back navigation */}
       <div className="flex items-center gap-2">
         <button
-          onClick={() => router.push("/providers")}
-          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition"
+          type="button"
+          onClick={() => router.push("/payment-details")}
+          className="p-1.5 rounded-xl text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-slate-100 dark:hover:bg-zinc-800 transition"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-zinc-50">
-            Step 5: {selectedProvider.name} Interface
+          <h1 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Confirm Payment
           </h1>
-          <p className="text-xs text-slate-500 dark:text-zinc-400">
-            Provider-inspired payment simulation
+          <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+            {selectedProvider.name} Payment Checkout
           </p>
         </div>
       </div>

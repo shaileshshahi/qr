@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { QrCode, RotateCcw, Clock, Settings, Sparkles } from "lucide-react";
+import { QrCode, Clock, Settings, RotateCcw } from "lucide-react";
 import { useSimulation } from "@/context/simulation-context";
 
 export function AppHeader() {
@@ -13,75 +13,63 @@ export function AppHeader() {
 
   const handleReset = () => {
     resetCurrentSimulation();
-    router.push("/scan");
+    router.push("/");
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md">
-      <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200/60 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md">
+      <div className="max-w-xl mx-auto px-4 h-13 flex items-center justify-between">
         {/* Brand */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 group transition-transform active:scale-95"
+          className="flex items-center gap-2 group transition-transform active:scale-95"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-cyan-600 p-0.5 shadow-sm shadow-emerald-500/20 flex items-center justify-center text-white">
-            <QrCode className="w-5 h-5 transition-transform group-hover:rotate-6" />
+          <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white shadow-sm shadow-emerald-600/30">
+            <QrCode className="w-4 h-4 stroke-[2.5]" />
           </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-bold text-base tracking-tight text-slate-900 dark:text-zinc-50">
-                QR Demo Nepal
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                Simulator
-              </span>
-            </div>
-            <p className="text-[10px] text-slate-500 dark:text-zinc-400 hidden xs:block">
-              Mobile-first QR & Payment Flow Prototyper
-            </p>
+          <div className="flex items-center gap-1.5">
+            <span className="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white">
+              QR Demo Nepal
+            </span>
+            <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+              Demo
+            </span>
           </div>
         </Link>
 
-        {/* Desktop Nav & Quick Actions */}
-        <div className="flex items-center gap-2">
+        {/* Header Right Actions */}
+        <div className="flex items-center gap-1">
           {scannedQr && (
             <button
+              type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-lg text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition"
-              title="Start a new QR scan"
+              className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-slate-100 dark:hover:bg-zinc-800 transition text-xs font-semibold flex items-center gap-1"
+              title="New Scan"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">New Scan</span>
+              <span className="hidden xs:inline">New</span>
             </button>
           )}
 
-          {/* History link with badge */}
           <Link
             href="/history"
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition ${
-              pathname === "/history"
-                ? "bg-slate-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm"
-                : "text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800"
+            className={`p-2 rounded-lg text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition relative ${
+              pathname === "/history" ? "text-emerald-600 dark:text-emerald-400" : ""
             }`}
+            title="History"
           >
-            <Clock className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">History</span>
+            <Clock className="w-4 h-4" />
             {transactions.length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-emerald-600 text-white">
-                {transactions.length}
-              </span>
+              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-600" />
             )}
           </Link>
 
-          {/* Settings link */}
           <Link
             href="/settings"
             className={`p-2 rounded-lg text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition ${
-              pathname === "/settings"
-                ? "bg-slate-100 dark:bg-zinc-800 text-slate-900 dark:text-zinc-50"
-                : ""
+              pathname === "/settings" ? "text-emerald-600 dark:text-emerald-400" : ""
             }`}
-            title="Settings & Guide"
+            title="Settings"
           >
             <Settings className="w-4 h-4" />
           </Link>
