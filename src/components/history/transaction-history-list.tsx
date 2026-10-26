@@ -147,10 +147,11 @@ export function TransactionHistoryList({
             const isFailed = tx.outcome === "failed";
 
             return (
-              <div
+              <button
                 key={tx.id}
+                type="button"
                 onClick={() => setSelectedTransaction(tx)}
-                className="p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-sm transition cursor-pointer flex items-center justify-between gap-3 text-left"
+                className="w-full p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-sm active:scale-[0.99] transition cursor-pointer flex items-center justify-between gap-3 text-left"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   {/* Outcome Status Icon */}
@@ -199,7 +200,7 @@ export function TransactionHistoryList({
                     {tx.simulationRef}
                   </div>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>

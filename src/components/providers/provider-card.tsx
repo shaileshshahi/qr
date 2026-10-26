@@ -16,9 +16,10 @@ export function ProviderCard({
   onSelect,
 }: ProviderCardProps) {
   return (
-    <div
+    <button
+      type="button"
       onClick={() => onSelect(provider)}
-      className={`group relative p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between text-left ${
+      className={`group relative p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between text-left w-full ${
         isSelected
           ? "border-emerald-600 dark:border-emerald-500 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-md ring-2 ring-emerald-500/20"
           : "border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-slate-300 dark:hover:border-zinc-700 hover:shadow-sm"
@@ -88,6 +89,6 @@ export function ProviderCard({
           </span>
         )}
       </div>
-    </div>
+    </button>
   );
 }

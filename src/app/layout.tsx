@@ -39,9 +39,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-emerald-500 selection:text-white pb-20 sm:pb-8">
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-emerald-500 selection:text-white pb-20 sm:pb-8"
+      >
         <SimulationProvider>
           {/* Top Persistent Simulation Disclosure Banner */}
           <DemoBanner variant="top-bar" />

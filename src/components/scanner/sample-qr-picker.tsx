@@ -36,12 +36,13 @@ export function SampleQrPicker({ onSelectSample }: SampleQrPickerProps) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         {SAMPLE_QR_LIST.map((sample) => (
-          <div
+          <button
             key={sample.id}
+            type="button"
             onClick={() => onSelectSample(sample.payload)}
-            className="group relative p-3.5 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 hover:border-emerald-500/50 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between text-left"
+            className="group relative p-3.5 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 hover:border-emerald-500/50 hover:shadow-md active:scale-[0.99] transition-all cursor-pointer flex flex-col justify-between text-left w-full"
           >
-            <div>
+            <div className="w-full">
               <div className="flex items-start justify-between gap-2 mb-1.5">
                 <span
                   className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${sample.tagColor}`}
@@ -64,14 +65,15 @@ export function SampleQrPicker({ onSelectSample }: SampleQrPickerProps) {
               </p>
             </div>
 
-            <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px]">
+            <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px] w-full">
               <span className="font-medium text-emerald-600 dark:text-emerald-400 inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                Load & Inspect <ArrowRight className="w-3 h-3" />
+                Load &amp; Inspect <ArrowRight className="w-3 h-3" />
               </span>
 
-              <button
+              <span
                 onClick={(e) => handleCopy(e, sample)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-1 rounded"
+                role="button"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-1.5 rounded cursor-pointer"
                 title="Copy raw payload"
               >
                 {copiedId === sample.id ? (
@@ -79,9 +81,9 @@ export function SampleQrPicker({ onSelectSample }: SampleQrPickerProps) {
                 ) : (
                   <Copy className="w-3.5 h-3.5" />
                 )}
-              </button>
+              </span>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>

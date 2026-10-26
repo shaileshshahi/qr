@@ -62,20 +62,23 @@ export default function HomePage() {
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-2">
-            <button
-              onClick={() => {
-                setActiveTab("camera");
-                setIsCameraActive(true);
-              }}
-              className="px-4 py-2.5 rounded-xl bg-white text-slate-900 font-bold text-xs shadow-md hover:bg-emerald-50 transition active:scale-95 inline-flex items-center gap-2"
+            <Link
+              href="/scan"
+              className="px-4 py-2.5 rounded-xl bg-white text-slate-900 font-bold text-xs shadow-md hover:bg-emerald-50 transition active:scale-95 inline-flex items-center gap-2 cursor-pointer"
             >
               <Camera className="w-4 h-4 text-emerald-600" />
               <span>Scan QR Code</span>
-            </button>
+            </Link>
 
             <button
-              onClick={() => setActiveTab("samples")}
-              className="px-4 py-2.5 rounded-xl bg-black/30 hover:bg-black/40 text-white font-semibold text-xs border border-white/20 backdrop-blur-md transition inline-flex items-center gap-1.5"
+              type="button"
+              onClick={() => {
+                setActiveTab("samples");
+                setIsCameraActive(false);
+                const el = document.getElementById("scanner-section");
+                el?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-4 py-2.5 rounded-xl bg-black/30 hover:bg-black/40 text-white font-semibold text-xs border border-white/20 backdrop-blur-md transition active:scale-95 inline-flex items-center gap-1.5 cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               <span>Try Presets</span>
@@ -91,7 +94,7 @@ export default function HomePage() {
       </div>
 
       {/* Primary Scanner / Tool Selection Tabs */}
-      <div className="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm space-y-4">
+      <div id="scanner-section" className="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm space-y-4">
         {/* Navigation Tabs */}
         <div className="flex rounded-xl bg-slate-100 dark:bg-zinc-800/80 p-1">
           <button
